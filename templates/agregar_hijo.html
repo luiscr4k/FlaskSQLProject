@@ -1,0 +1,169 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+CDDS - Agregar Hijo
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Proyecto base de datos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/dashboard">Inicio</a></li>
+            <li><a href="{{ url_for('logout') }}">Cerrar sesion</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/dashboard">Vista general <span class="sr-only">(current)</span></a></li>
+
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="/agregar_empleado">Empleados</a></li>
+            <li><a href="/agregar_departamento">Departamentos</a></li>
+            <li><a href="/agregar_centro">Centros de Trabajo</a></li>
+            <li><a href="/agregar_habilidad">Consultar habilidades de empleado</a></li>
+            <li class="active"><a href="/agregar_hijo">Consultar hijos de empleado</a></li>
+          </ul>
+
+            <ul class="nav nav-sidebar">
+            <li><a class="btn btn-success" type="submit" role="button" href="../generar/reporte_empleados" target="_blank">Generar reporte empleados</a></li>
+                <br>
+            <li><a class="btn btn-danger" type="submit" role="button" href="../generar/reporte_departamentos" target="_blank">Generar reporte departamentos</a></li>
+                <br>
+            <li><a class="btn btn-info" type="submit" role="button" href="../generar/reporte_habilidades" target="_blank">Generar reporte habilidades</a></li>
+          </ul>
+          </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h3 class="page-header">Agregar nuevo hijo</h3>
+          <div class="row placeholders">
+              <form method = "POST">
+                <div class = "form-group">
+                  {{hijo_form.csrf_token}}
+                    {{hijo_form.hidden_tag()}}
+                <p>
+                  <div class="form-group">
+                    <div class="col-md-3 col-sm-3 col-md-offset-2 placeholder form-group">
+                  <p>
+                      {{wtf.form_field(hijo_form.nombre_hijo)}}
+                  </p>
+                    <p>
+                        {{wtf.form_field(hijo_form.apellidoP_hijo)}}
+
+                    </p>
+                        {{wtf.form_field(hijo_form.apellidoM_hijo)}}
+                  </div>
+                    <div class="col-md-3 col-sm-3 col-md-offset-2 placeholder form-group">
+                  <p>
+                      {{wtf.form_field(hijo_form.fecha_nacimiento)}}
+                  </p>
+                    <p>
+                        {{wtf.form_field(hijo_form.empleado_padre)}}
+                    </p>
+                        <input type="submit" class="btn btn-primary">
+                  </div>
+                    <div class="form-group">
+                    </div>
+                </p
+                </div>
+                </div>
+              </form>
+           </div>
+          </div>
+          <h3 class="sub-header">Lista de hijos de empleados</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+        <tr>
+            <th>Nombre del hijo</th>
+            <th>Fecha de nacimiento</th>
+            <th>Padre</th>
+            <th>Nombre Padre</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for hijo in hijotabla%}
+            <tr>
+                <td>{{hijo.nombre_hijo}} {{hijo.apellidoP_hijo}}</td>
+                <td>{{hijo.fecha_nacimiento}}</td>
+                <td>{{hijo.rif}}</td>
+                <td>{{hijo.nombre_empleado}} {{hijo.apellidoP_empleado}} {{hijo.apellidoM_empleado}}</td>
+                <td>  <!-- Accionador mostrar -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCentroMostrar{{hijo.codigohijo}}">
+                    Ver
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="ModalCentroMostrar{{hijo.codigohijo}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h2 class="modal-title alert" id="ModalTituloMostrar{{hijo.codigohijo}}">Hijo #{{hijo.codigohijo}}</h2>
+                        </div>
+                        <div class="modal-body">
+                          <h3>ID: {{hijo.codigohijo}}</h3>
+                          <h3>Nombre: {{hijo.nombre_hijo}} {{hijo.apellidoP_hijo}} {{hijo.apellidoM_hijo}}</h3>
+                          <h3>Fecha Nacimiento: {{hijo.fecha_nacimiento}}</h3>
+                          <h3>Padre: {{hijo.empleado_padre}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6 col-md-offset-3" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div></td>
+                <td>{% if admin == True %}<a class="btn btn-secondary" type="submit" role="button" href="../editar_hijo/{{hijo.codigohijo}}">Editar</a></td>
+                <td>  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalTemplateEliminar{{hijo.codigohijo}}">
+                    Eliminar
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="ModalTemplateEliminar{{hijo.codigohijo}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title alert" id="ModalTituloEliminar{{hijo.codigohijo}}">Estas a punto de eliminar permanentemente este registro</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h3>Nombre: {{hijo.nombre_hijo}}</h3>
+                          <h4>ID: {{hijo.codigohijo}}</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6" data-dismiss="modal">Cancelar</button>
+                          <form action="{{url_for('eliminar_hijo', codigohijo=hijo.codigohijo)}}" method="get">
+                          <input type="submit" value="Eliminar" class="btn btn-danger col-xs-6">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+            </table>
+          </div>
+{% endblock %}

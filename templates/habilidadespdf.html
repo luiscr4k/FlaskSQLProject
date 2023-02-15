@@ -1,0 +1,32 @@
+<h1 style="text-align: center;">CDDS C.A</h1>
+<h3 style="text-align: center;">J-1300739330</h3>
+<hr />
+<h2 class="sub-header">Reporte de habilidades</h2>
+<hr />
+<div class="table-responsive">
+<table class="table table-striped">
+<thead>
+<tr>
+        <tr>
+            <th><h3>RIF Empleado</h3></th>
+            <th><h3>Nombre Empleado</h3></th>
+            <th><h3>ID Habilidad</h3></th>
+            <th><h3>Descripcion Habilidad</h3></th>
+        </tr>
+</tr>
+</thead>
+<tbody>
+{% for habilidad in habilidades %}
+<tr>
+<td>{{habilidad.empleado_rif}}</td>
+<td>{{habilidad.nombre_empleado}} {{habilidad.empleado_apellidoP}} {{habilidad.empleado_apellidoM}}</td>
+<td>{{habilidad.codigohabilidad}}</td>
+<td>{{habilidad.descripcion}}</td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+    <hr />
+</div>
+<p>Informe realizado por Elibeth Curalli, Luis Cruces, Francisco Silva y Octavio Luque para el Polit&eacute;cnico Santiago Mari&ntilde;o</p>

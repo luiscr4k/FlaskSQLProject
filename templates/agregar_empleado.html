@@ -1,0 +1,205 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+CDDS - Agregar Empleado
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/dashboard">Proyecto base de datos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/dashboard">Inicio</a></li>
+            <li><a href="{{ url_for('logout') }}">Cerrar sesion</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/dashboard">Vista general <span class="sr-only">(current)</span></a></li>
+
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="/agregar_empleado">Empleados</a></li>
+            <li><a href="/agregar_departamento">Departamentos</a></li>
+            <li><a href="/agregar_centro">Centros de Trabajo</a></li>
+            <li><a href="/agregar_habilidad">Consultar habilidades de empleado</a></li>
+            <li><a href="/agregar_hijo">Consultar hijos de empleado</a></li>
+          </ul>
+
+            <ul class="nav nav-sidebar">
+            <li><a class="btn btn-success" type="submit" role="button" href="../generar/reporte_empleados" target="_blank">Generar reporte empleados</a></li>
+                <br>
+            <li><a class="btn btn-danger" type="submit" role="button" href="../generar/reporte_departamentos" target="_blank">Generar reporte departamentos</a></li>
+                <br>
+            <li><a class="btn btn-info" type="submit" role="button" href="../generar/reporte_habilidades" target="_blank">Generar reporte habilidades</a></li>
+          </ul>
+          </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h3 class="page-header">Agregar un nuevo empleado</h3>
+          <div class="row placeholders">
+            <form method = "POST">
+                {{empleado_form.csrf_token}}
+                {{empleado_form.hidden_tag()}}
+                <div class="col-xs-6 col-sm-3 placeholder form-group">
+                <p>
+                {{wtf.form_field(empleado_form.rif)}}
+                </p>
+                <p>
+                {{wtf.form_field(empleado_form.fecha_ingreso_emp)}}
+                </p>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder form-group">
+                <p>
+                {{wtf.form_field(empleado_form.nombre_empleado)}}
+                </p>
+                <p>
+                    {{wtf.form_field(empleado_form.tlf_movil_emp)}}
+                </p>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder form-group">
+                <p>
+                {{wtf.form_field(empleado_form.apellidoP_empleado)}}
+              </p>
+                <p>
+                {{wtf.form_field(empleado_form.tlf_fijo_emp)}}
+              </p>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                <p>
+                {{wtf.form_field(empleado_form.apellidoM_empleado)}}
+              </p>
+              <p>
+                {{wtf.form_field(empleado_form.codigo_dep_emp)}}
+              </p>
+              </div>
+              <div class="col-sm-6 col-sm-3 placeholder">
+                  <p>
+                    {{wtf.form_field(empleado_form.salario)}}
+                  </p>
+              </div>
+              <div class="col-sm-6 col-sm-3 placeholder">
+                  <p>
+                      {{wtf.form_field(empleado_form.num_hijos)}}
+                  </p>
+              </div>
+
+              <p>
+                  <div class="col-sm-6 col-sm-3">
+                    <br> <br>
+                  <input type="submit" class="col-md-8 col-md-offset-2 col-sm-5 col-md-offset-3  btn btn-primary">
+                  </div>
+              </p>
+            </form>
+          </div>
+
+          <h2 class="sub-header">Lista de empleados agregados recientemente</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+        <tr>
+            <th>Rif</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Telefono Movil</th>
+            <th>Codigo departamento empleado</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados%}
+            <tr>
+                <td>{{empleado.rif}}</td>
+                <td>{{empleado.nombre_empleado}}</td>
+                <td>{{empleado.apellidoP_empleado}}</td>
+                <td>{{empleado.tlf_movil_emp}}</td>
+                <td>#{{empleado.codigo_dep_emp}} {{empleado.nombre_dep}}</td>
+                <td>  <!-- Accionador mostrar -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCentroMostrar{{empleado.rif}}">
+                    Ver
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="ModalCentroMostrar{{empleado.rif}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h2 class="modal-title alert" id="ModalTituloMostrar{{empleado.rif}}">Empleado #{{empleado.rif}}</h2>
+                        </div>
+                        <div class="modal-body">
+                          <h3>RIF: {{empleado.rif}}</h3>
+                          <h3>Nombre: {{empleado.nombre_empleado}}</h3>
+                          <h3>Apellidos: {{empleado.apellidoP_empleado}} {{empleado.apellidoM_empleado}}</h3>
+                          <h4>Telefonos<br/>  Movil:{{empleado.tlf_movil_emp}} / Fijo:{{empleado.tlf_fijo_emp}}</h4>
+                          <h4>Fecha de ingreso: {{empleado.fecha_ingreso_emp}}</h4>
+                          <h4>Numero de hijos: {{empleado.num_hijos}}</h4>
+                          <h4>Salario: {{empleado.salario}}</h4>
+                          <h3>Departamento: {{empleado.codigo_dep_emp}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6 col-md-offset-3" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div></td>
+                <td>{% if admin == True %}<a class="btn btn-secondary" type="submit" role="button" href="../editar_empleado/{{empleado.rif}}">Editar</a></td>
+                <td>                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{empleado.rif}}">
+                    Eliminar
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{{empleado.rif}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title alert" id="exampleModalLongTitle{{empleado.rif}}">Estas a punto de eliminar permanentemente este registro</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h3>RIF: {{empleado.rif}}</h3>
+                          <h3>Nombre: {{empleado.nombre_empleado}}</h3>
+                          <h3>Apellidos: {{empleado.apellidoP_empleado}} {{empleado.apellidoM_empleado}}</h3>
+                          <h4>Telefonos<br/>  Movil:{{empleado.tlf_movil_emp}} / Fijo:{{empleado.tlf_fijo_emp}}</h4>
+                          <h4>Fecha de ingreso: {{empleado.fecha_ingreso_emp}}</h4>
+                          <h4>Numero de hijos: {{empleado.num_hijos}}</h4>
+                          <h4>Salario: {{empleado.salario}}</h4>
+                          <h3>Departamento: {{empleado.codigo_dep_emp}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6" data-dismiss="modal">Cancelar</button>
+                          <form action="{{url_for('eliminar_empleado', rif=empleado.rif)}}" method="get">
+                          <input type="submit" value="Eliminar" class="btn btn-danger col-xs-6">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>{% endif %}</td>
+            </tr>
+            {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+<h1>Agregar empleado</h1>

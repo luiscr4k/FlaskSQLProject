@@ -1,0 +1,198 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+CDDS - Agregar Habilidad
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Proyecto base de datos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/dashboard">Inicio</a></li>
+            <li><a href="{{ url_for('logout') }}">Cerrar sesion</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/dashboard">Vista general <span class="sr-only">(current)</span></a></li>
+
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="/agregar_empleado">Empleados</a></li>
+            <li><a href="/agregar_departamento">Departamentos</a></li>
+            <li><a href="/agregar_centro">Centros de Trabajo</a></li>
+            <li class="active"><a href="/agregar_habilidad">Consultar habilidades de empleado</a></li>
+            <li><a href="/agregar_hijo">Consultar hijos de empleado</a></li>
+          </ul>
+
+            <ul class="nav nav-sidebar">
+            <li><a class="btn btn-success" type="submit" role="button" href="../generar/reporte_empleados" target="_blank">Generar reporte empleados</a></li>
+                <br>
+            <li><a class="btn btn-danger" type="submit" role="button" href="../generar/reporte_departamentos" target="_blank">Generar reporte departamentos</a></li>
+                <br>
+            <li><a class="btn btn-info" type="submit" role="button" href="../generar/reporte_habilidades" target="_blank">Generar reporte habilidades</a></li>
+          </ul>
+          </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-sm-offset-2 main">
+          <div class="row placeholders">
+            <div class="col-md-6 col-md-6 placeholder">
+              <div class = "col-md-6 col-sm-3 col-md-offset-2 placeholder form-group">
+                  <h3 class="page-header">Agregar una nueva habilidad</h3>
+              <form method = "POST">
+                <div class = "form-group">
+                  {{hab_form.csrf_token}}
+                    {{hab_form.hidden_tag()}}
+                    <p>
+                      {{wtf.form_field(hab_form.descripcion)}}
+                    </p>
+                <input type="submit" class="btn btn-primary">
+                </div>
+              </form>
+            </div>
+           </div>
+
+              <div class = "col-md-6 col-md-6 placeholder">
+                  <h3 class="page-header">Agregar una habilidad a un empleado</h3>
+              <form method = "POST">
+                <div class = "form-group">
+                  {{emp_form.csrf_token}}
+                  {{emp_form.hidden_tag()}}
+                <p>
+                      {{wtf.form_field(emp_form.empleado_rif)}}
+                  </p>
+                  <p>
+                      {{wtf.form_field(emp_form.habilidad_id)}}
+                  </p>
+                </p>
+                <input type="submit" class="btn btn-primary">
+                </div>
+              </form>
+          </div>
+              </div>
+              <br>
+          <h3 class="sub-header">Habilidades agregadas</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descripcion Habilidad</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for habilidad in tabla_habilidades%}
+            <tr>
+                <td>{{habilidad.codigohabilidad}}</td>
+                <td>{{habilidad.descripcion}}</td>
+                <td>{% if admin == True %}<a class="btn btn-secondary" type="submit" role="button" href="../editar_habilidad/{{habilidad.codigohabilidad}}">Editar</a></td>
+                <td><!-- Button trigger modal -->
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{habilidad.codigohabilidad}}">
+                    Eliminar
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{{habilidad.codigohabilidad}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title alert" id="exampleModalLongTitle{{habilidad.codigohabilidad}}">Estas a punto de eliminar permanentemente este registro</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h3>Codigo: {{habilidad.codigohabilidad}}</h3>
+                          <h4>Habilidad: {{habilidad.descripcion}}</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6" data-dismiss="modal">Cancelar</button>
+                          <form action="{{url_for('eliminar_habilidad', codigohabilidad=habilidad.codigohabilidad)}}" method="get">
+                          <input type="submit" value="Eliminar" class="btn btn-danger col-xs-6">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>{% endif %}</td>
+            </tr>
+            {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+              <br><br>
+          <h3 class="sub-header">Lista de empleados y sus habilidades</h3>
+              <br>
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>RIF Empleado</th>
+            <th>Nombre Empleado</th>
+            <th>ID Habilidad</th>
+            <th>Descripcion Habilidad</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for emphab in tabla_emphab%}
+            <tr>
+                <td>{{emphab.empleado_rif}}</td>
+                <td>{{emphab.nombre_empleado}} {{emphab.empleado_apellidoP}} {{emphab.empleado_apellidoM}}</td>
+                <td>{{emphab.codigohabilidad}}</td>
+                <td>{{emphab.descripcion}}</td>
+                <td>{% if admin == True %}<a class="btn btn-secondary" type="submit" role="button" href="/editar_habilidad_emp/{{emphab.id_emphab}}">Editar</a></td>
+                <td><!-- Button trigger modal -->
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{emphab.id_emphab}}">
+                    Eliminar
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{{emphab.id_emphab}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title alert" id="exampleModalLongTitle{{emphab.id_emphab}}">Estas a punto de eliminar permanentemente este registro</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h3>RIF empleado: {{emphab.empleado_rif}}</h3>
+                          <h4>ID de habilidad: {{emphab.habilidad_id}}</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6" data-dismiss="modal">Cancelar</button>
+                          <form action="{{url_for('eliminar_habilidad_emp', id_emphab=emphab.id_emphab)}}" method="get">
+                          <input type="submit" value="Eliminar" class="btn btn-danger col-xs-6">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+        </div>
+    </div>
+{% endblock %}

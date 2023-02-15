@@ -1,0 +1,161 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+CDDS - Agregar Departamento
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/dashboard">Proyecto base de datos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/dashboard">Inicio</a></li>
+            <li><a href="{{ url_for('logout') }}">Cerrar sesion</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/dashboard">Vista general <span class="sr-only">(current)</span></a></li>
+
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="/agregar_empleado">Empleados</a></li>
+            <li class="active"><a href="/agregar_departamento">Departamentos</a></li>
+            <li><a href="/agregar_centro">Centros de Trabajo</a></li>
+            <li><a href="/agregar_habilidad">Consultar habilidades de empleado</a></li>
+            <li><a href="/agregar_hijo">Consultar hijos de empleado</a></li>
+          </ul>
+            <ul class="nav nav-sidebar">
+            <li><a class="btn btn-success" type="submit" role="button" href="../generar/reporte_empleados" target="_blank">Generar reporte empleados</a></li>
+                <br>
+            <li><a class="btn btn-danger" type="submit" role="button" href="../generar/reporte_departamentos" target="_blank">Generar reporte departamentos</a></li>
+                <br>
+            <li><a class="btn btn-info" type="submit" role="button" href="../generar/reporte_habilidades" target="_blank">Generar reporte habilidades</a></li>
+          </ul>
+          </div>
+        <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-2 main">
+            <h3 class="page-header">Agregar un nuevo departamento</h3>
+          <div class="row placeholders">
+            <div>
+              <div class = "col-md-6 col-sm-3 col-md-offset-3 placeholder form-group">
+              <form method = "POST">
+                <div class = "form-group">
+                  {{departamento_form.csrf_token}}
+                    {{departamento_form.hidden_tag()}}
+                <p>
+                  <div class="form-group">
+                  {{wtf.form_field(departamento_form.nombre_dep)}}
+                  </div>
+                    <div class="form-group">
+                  {{wtf.form_field(departamento_form.presupuesto_anual)}}
+                  </div>
+                  <div class="form-group">
+                  {{wtf.form_field(departamento_form.codigo_centro)}}
+                  </div>
+                    <div class="form-group">
+                    <input type="submit" class="btn btn-primary">
+                    </div>
+                </p
+                </div>
+                </div>
+              </form>
+            </div>
+           </div>
+          </div>
+          <h3 class="sub-header">Lista de departamentos existentes</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre del departamento</th>
+            <th>Presupuesto Anual</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for departamento in departamentos%}
+            <tr>
+                <td>{{departamento.id}}</td>
+                <td>{{departamento.nombre_dep}}</td>
+                <td>{{departamento.presupuesto_anual}}</td>
+                <td>  <!-- Accionador mostrar -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCentroMostrar{{departamento.id}}">
+                    Ver
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="ModalCentroMostrar{{departamento.id}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h3 class="modal-title alert" id="ModalTituloMostrar{{departamento.id}}">Departamento #{{departamento.id}}</h3>
+                        </div>
+                        <div class="modal-body">
+                          <h4>Nombre: {{departamento.nombre_dep}}</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4>Presupuesto anual: {{departamento.presupuesto_anual}}</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6 col-md-offset-3" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div></td>
+                <td>{% if admin == True %}<a class="btn btn-secondary" type="submit" role="button" href="../editar_departamento/{{departamento.id}}">Editar</a></td>
+                <td>  <!-- Accionador Eliminar -->
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalCentroBorrar{{departamento.id}}">
+                    Eliminar
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="ModalCentroBorrar{{departamento.id}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title alert" id="ModalTituloBorrar{{departamento.id}}">Estas a punto de eliminar permanentemente este registro</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h3>Nombre: {{departamento.nombre_dep}}</h3>
+                          <h4>ID: {{departamento.id}}</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6" data-dismiss="modal">Cancelar</button>
+                          <form action="{{url_for('eliminar_departamento', id=departamento.id)}}" method="get">
+                          <input type="submit" value="Eliminar" class="btn btn-danger col-xs-6">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+            </table>
+          </div>
+{% endblock %}
+

@@ -1,0 +1,88 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/dashboard">Proyecto base de datos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/dashboard">Inicio</a></li>
+            <li><a href="{{ url_for('logout') }}">Cerrar sesion</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="/dashboard">Vista general <span class="sr-only">(current)</span></a></li>
+
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="/agregar_empleado">Empleados</a></li>
+            <li><a href="/agregar_departamento">Departamentos</a></li>
+            <li><a href="/agregar_centro">Centros de Trabajo</a></li>
+            <li><a href="/agregar_habilidad">Consultar habilidades de empleado</a></li>
+            <li><a href="/agregar_hijo">Consultar hijos de empleado</a></li>
+          </ul>
+
+          <ul class="nav nav-sidebar">
+<li><a class="btn btn-success" type="submit" role="button" href="../generar/reporte_empleados" target="_blank">Generar reporte empleados</a></li>
+                <br>
+<li><a class="btn btn-danger" type="submit" role="button" href="../generar/reporte_departamentos" target="_blank">Generar reporte departamentos</a></li>
+                <br>
+ <li><a class="btn btn-info" type="submit" role="button" href="../generar/reporte_habilidades" target="_blank">Generar reporte habilidades</a></li>
+          </ul>
+          </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Bienvenido, {{ usuario }}</h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="/static/img/post.png" width="200" height="200" class="img-responsive">
+              <h4>PostgreSQL</h4>
+              <span class="text-muted">Gestor de bases de datos</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="/static/img/python.png" width="200" height="200" class="img-responsive">
+              <h4>Python</h4>
+              <span class="text-muted">Lenguaje de programacion</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="/static/img/server.png" width="200" height="200" class="img-responsive">
+              <h4>Flask</h4>
+              <span class="text-muted">Framework de aplicaciones web</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="/static/img/html.png" width="200" height="200" class="img-responsive">
+              <h4>HTML</h4>
+              <span class="text-muted">Lenguaje de etiquetado</span>
+            </div>
+          </div>
+          <div class="responsive">
+            <img src ="/static/img/estadisticas.png" width="670" height="400">
+            <img src ="/static/img/estadisticas.png" width="670" height="400">
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

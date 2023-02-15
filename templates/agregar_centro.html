@@ -1,0 +1,163 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+CDDS - Agregar Centro
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/dashboard">Proyecto base de datos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/dashboard">Inicio</a></li>
+            <li><a href="{{ url_for('logout') }}">Cerrar sesion</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/dashboard">Vista general <span class="sr-only">(current)</span></a></li>
+
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="/agregar_empleado">Empleados</a></li>
+            <li><a href="/agregar_departamento">Departamentos</a></li>
+            <li class="active"><a href="/agregar_centro">Centros de Trabajo</a></li>
+            <li><a href="/agregar_habilidad">Consultar habilidades de empleado</a></li>
+            <li><a href="/agregar_hijo">Consultar hijos de empleado</a></li>
+          </ul>
+            <ul class="nav nav-sidebar">
+            <li><a class="btn btn-success" type="submit" role="button" href="../generar/reporte_empleados" target="_blank">Generar reporte empleados</a></li>
+                <br>
+            <li><a class="btn btn-danger" type="submit" role="button" href="../generar/reporte_departamentos" target="_blank">Generar reporte departamentos</a></li>
+                <br>
+            <li><a class="btn btn-info" type="submit" role="button" href="../generar/reporte_habilidades" target="_blank">Generar reporte habilidades</a></li>
+          </ul>
+          </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h3 class="page-header">Agregar nuevo centro de trabajo</h3>
+          <div class="row placeholders">
+              <form method = "POST">
+                  {{centro_form.csrf_token}}
+                    {{centro_form.hidden_tag()}}
+                <div class="col-md-6 col-sm-3 placeholder form-group">
+                  <p>
+                      {{wtf.form_field(centro_form.calle_av)}}
+                  </p>
+                    <p>
+                        {{wtf.form_field(centro_form.ciudad_centro)}}
+                    </p>
+                    <p>
+                        {{wtf.form_field(centro_form.estado_centro)}}
+                    </p>
+                  </div>
+                  <div class="col-md-6 col-sm-3 placeholder form-group">
+                      <p>
+                          {{wtf.form_field(centro_form.poblacion_centro)}}
+                      </p>
+                      <p>{{wtf.form_field(centro_form.codigo_jefe)}}</p>
+                  </div>
+                  <div><input type="submit" class="btn btn-primary center"></div>
+                </div>
+              </form>
+          <h2 class="sub-header">Lista de centros de trabajo</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ciudad</th>
+            <th>Estado</th>
+            <th>RIF Jefe</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for centros in centrotrabajo%}
+            <tr>
+                <td>{{centros.id_centro}}</td>
+                <td>{{centros.ciudad_centro}}</td>
+                <td>{{centros.estado_centro}}</td>
+                <td>{{centros.codigo_jefe}}</td>
+                <td>  <!-- Accionador mostrar -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCentroMostrar{{centros.id_centro}}">
+                    Ver
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="ModalCentroMostrar{{centros.id_centro}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h2 class="modal-title alert" id="ModalTituloMostrar{{centros.id_centro}}">Empleado #{{centros.id_centro}}</h2>
+                        </div>
+                        <div class="modal-body">
+                          <h3>ID: {{centros.id_centro}}</h3>
+                          <h3>Calle especifica: {{centros.calle_av}}</h3>
+                          <h3>Ubicacion: {{centros.ciudad_centro}}, estado {{centros.estado_centro}}</h3>
+                          <h4>Poblacion: {{centros.poblacion_centro}}</h4>
+                          <h3>Codigo de jefe: {{centros.codigo_jefe}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6 col-md-offset-3" data-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div></td>
+                <td>{% if admin == True %}<a class="btn btn-secondary" type="submit" role="button" href="../editar_centro/{{centros.id_centro}}">Editar</a></td>
+                <td>  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{centros.id_centro}}">
+                    Eliminar
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{{centros.id_centro}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title alert" id="exampleModalLongTitle{{centros.id_centro}}">Estas a punto de eliminar permanentemente este registro</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h3>Direccion: {{centros.direccion_centro}}</h3>
+                          <h4>ID: {{centros.id_centro}}</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary col-xs-6" data-dismiss="modal">Cancelar</button>
+                          <form action="{{url_for('eliminar_centro', id_centro=centros.id_centro)}}" method="get">
+                          <input type="submit" value="Eliminar" class="btn btn-danger col-xs-6">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

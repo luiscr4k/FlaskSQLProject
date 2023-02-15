@@ -1,0 +1,29 @@
+<p style="text-align: center;">ESTO ES UNA GRILLA PARA MOSTRAR DATOS DE UN REPORTE EN PYTHON</p>
+<h2 class="sub-header">centrotrabajo</h2>
+<div class="table-responsive">
+<table class="table table-striped" style="height: 43px;" width="1673">
+<thead>
+<tr>
+<th style="width: 124.422px;">calle y/o avenida</th>
+<th style="width: 246.828px;">ciudad</th>
+<th style="width: 240.406px;">estado</th>
+<th style="width: 240.406px;">Poblacion</th>
+<th style="width: 240.406px;">codigo del jefe</th>
+<th style="width: 23.2031px;">&nbsp;</th>
+<th style="width: 41.3281px;">&nbsp;</th>
+<th style="width: 0px;">&nbsp;</th>
+</tr>
+</thead>
+<tbody>
+<tr>{% for centrotrabajo in centros%}
+<td style="width: 246.828px;">{{centro.calle_av}}</td>
+<td style="width: 240.406px;">{{centro.ciudad_centro}}</td>
+<td style="width: 240.406px;">{{centro.estado_centro}}</td>
+<td style="width: 240.406px;">{{centro.poblacion_centro}}</td>
+<td style="width: 240.406px;">{{centro.codigo_jefe}}</td>
+<td style="width: 0px;">&nbsp;</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>

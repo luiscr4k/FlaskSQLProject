@@ -1,0 +1,38 @@
+<h1 style="text-align: center;">CDDS C.A</h1>
+<h3 style="text-align: center;">J-1300739330</h3>
+<hr />
+<h2 class="sub-header">Reporte de departamentos</h2>
+<hr />
+<div class="table-responsive">
+<table class="table table-striped">
+<thead>
+<tr>
+<th><h3>ID</h3></th>
+<th><h3>Nombre Departamento</h3></th>
+<th><h3>Presupuesto</h3></th>
+<th><h3>COD Centro</h3></th>
+    <th>
+        <h3>Direccion</h3>
+    </th>
+    <th>
+        <h3>Poblacion</h3>
+    </th>
+</tr>
+</thead>
+<tbody>
+{% for departamento in departamentos %}
+<tr>
+<td>{{departamento.id}}</td>
+<td>{{departamento.nombre_dep}}</td>
+<td>{{departamento.presupuesto_anual}}</td>
+<td>{{departamento.codigo_centro}}</td>
+<td>{{departamento.calle_av}}, {{departamento.ciudad_centro}} {{departamento.estado}} </td>
+<td>{{departamento.poblacion_centro}}</td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+    <hr />
+<p>Informe realizado por Elibeth Curalli, Luis Cruces, Francisco Silva y Octavio Luque para el Polit&eacute;cnico Santiago Mari&ntilde;o</p>
+</div>

@@ -1,0 +1,266 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+CDDS - Index
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+
+<link rel="stylesheet" href="{{url_for('.static', filename='grayscale.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Inicio</a></li>
+            <li><a href="{{ url_for('login') }}">Iniciar Sesión</a></li>
+            <li><a href="{{ url_for('registro') }}">Registro</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<!-- /.container -->
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">C D D S </S></h1>
+                        <p class="intro-text">COMPAÑÍA DESARROLLADORA DE SOTFWARE Y BASES DE DATOS</p>
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Software Section -->
+    <section id="software" class="container content-section text-center">
+		<div class="container">
+			<h2>SOFTWARE</h2>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<div class="box">
+						<div class="box-icon">
+							<span class="fa fa-4x fa-file-code-o"></span>
+						</div>
+						<div class="info">
+							<h4 class="text-center" style="padding-top:10px">Definición</h4>
+							<p>El software está compuesto por un conjunto de aplicaciones y programas diseñados para cumplir diversas funciones dentro de un sistema. Además, está formado por la información del usuario y los datos procesados.
+							</p>
+							<a href="#" class="btn btn-default">más</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					<div class="box">
+						<div class="box-icon">
+							<span class="fa fa-4x fa-gamepad"></span>
+						</div>
+						<div class="info">
+							<h4 class="text-center" style="padding-top:10px">Software libre</h4>
+							<p>	El software libre es un software en el que los usuarios pueden acceder a su código fuente para estudiarlo, copiarlo o modificarlo.</p>
+							<a href="#" class="btn btn-default">más</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </section>
+
+    <!-- Proyectos Section -->
+    <section id="proyectos" class="content-section text-center">
+        <div class="proyectos-section">
+            <div class="container">
+				<h2>PROYECTO</h2>
+                <div class="row">
+                    <h3>BASE DE DATOS: APP WEB CON CONEXION A BASE DE DATOS</h3>
+                    <p>Para le ejecución y desarrollo de la presente web, se empleó como gestor de base de datos 
+					 PostgreSQL, y su conexión fue realizada con python empleando la librería sqlalchemy
+					</p>
+                    <a href="#" class="btn btn-default btn-lg">Más información</a>
+                </div>
+				<div class="row" style="padding-top:50px">
+                    <h3>ESTRUCTURA DE DATOS EMPLEADAS</h3>
+                    <p>Se emplearon las listas y pilas. En el caso de las listas fue empleada con la funcion "Agregar al final" y en las 
+						pilas, "Apilar", con el fin de mostrar resultados mas organizados 
+					</p>
+                    <a href="#" class="btn btn-default btn-lg">Más información</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premios Section -->
+    <section id="flask" class="container content-section">
+        <div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<h2>Flask como framework</h2>
+				<p>Empleamos flask como framework WSGI debido a su practicidad y minimalismo a la hora de comprender toda su libreria de funciones, este Framework de Python
+					permite crear aplicaciones web rápidamente y con un mínimo número de líneas de código, adicionalmente, cuenta con muchas librerías basadas en la especificación
+					WSGI de Werkzeug y el motor de templates Jinja2.
+				</p>
+				</p>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" align="center">
+				<a href="#">
+					<img src="/static/img/flask.png" width="320">
+				</a>
+			</div>
+        </div>
+    </section>
+
+	<!-- Colaboraciones Section -->
+    <section id="colaboraciones" class="content-section text-center">
+        <div class="colaboraciones-section">
+            <div class="container">
+				<h2>Componentes indispensables</h2>
+				<div class="row" style="margin-bottom:40px">
+					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+						<img class="img-circle" src="/static/img/sqlalchemy.jpg" alt="Generic placeholder image" style="height: 140px;">
+						<h2 style="font-size:20px; padding-top:20px">SQL Alchemy</h2>
+						<p>SQLAlchemy es un kit de herramientas SQL de código abierto y un mapeador relacional de objetos para el lenguaje de programación Python publicado bajo la licencia MIT</p>
+						<a href="https://docs.sqlalchemy.org/en/20/" class="btn btn-default btn-lg">Ir a la documentacion</a>
+					</div>
+					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+						<img class="img-circle" src="/static/img/bootstrap.png" alt="Generic placeholder image" style="height: 140px;">
+						<h2 style="font-size:20px; padding-top:20px">Bootstrap</h2>
+						<p>Bootstrap es una biblioteca multiplataforma o conjunto de herramientas de código abierto para diseño de sitios y aplicaciones web</p>
+						<a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" class="btn btn-default btn-lg">Ir a la documentacion</a>
+					</div>
+					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+						<img class="img-circle" src="/static/img/werkzeug.png" alt="Generic placeholder image" style="height: 140px;">
+						<h2 style="font-size:20px; padding-top:20px">Werkzeug WSGI</h2>
+						<p>Werkzeug es un conjunto de herramientas WSGI que se puede utilizar como la biblioteca subyacente de un marco web</p>
+						<a href="https://werkzeug.palletsprojects.com/en/2.2.x/" class="btn btn-default btn-lg" >Ir a la documentacion</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+						<img class="img-circle" src="/static/img/postgreSQL.png" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+						<h2 style="font-size:20px; padding-top:20px">PostgreSQL</h2>
+						<p>Es un sistema de gestión de bases de datos relacional orientado a objetos y de código abierto, publicado bajo la licencia PostgreSQL</p>
+						<a href="https://www.postgresql.org/" class="btn btn-default btn-lg">Ir a la documentacion</a>
+					</div>
+					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+						<img class="img-circle" src="/static/img/wtforms.png" alt="Generic placeholder image" style="width: 200px; height: 140px;">
+						<h2 style="font-size:20px; padding-top:20px">Flask WTForms</h2>
+						<p>Flask WTF es una librería de Python que contiene módulos y métodos que te permite crear formularios para páginas o aplicaciones web.</p>
+						<a href="https://wtforms.readthedocs.io/" class="btn btn-default btn-lg">Ir a la documentacion</a>
+					</div>
+					<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+						<img class="img" src="/static/img/udemy.png" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+						<h2 style="font-size:20px; padding-top:20px">Udemy</h2>
+						<p>Udemy.com es una plataforma de aprendizaje en línea. Está dirigido a adultos profesionales.​ A diferencia de los programas académicos MOOC conducidos por tradicionales cursos de trabajo creados por las universidades.</p>
+						<a href="https://www.udemy.com/" class="btn btn-default btn-lg">Ir a la documentacion</a>
+					</div>
+				</div>
+            </div>
+        </div>
+    </section>
+
+	<!-- Miembros Section -->
+    <section id="miembros" class="content-section text-center">
+		<h2>Miembros</h2>
+		<div class="container">
+			<div class="" style="">
+				<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+					<img src="/static/images/elibeth.jpg" class="img-circle" style="width: 140px; height: 140px;" alt="">
+					<h4 style="padding-top:20px">Elibeth Curalli</h4>
+					<p>Estudiante, 5to semestre PSM Maracay
+					<ul class="list-inline social-buttons">
+						<li><a href="#"><i class="fa fa-2x fa-github"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-linkedin"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-envelope"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-phone"></i></a></li>
+					</ul></p>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+					<img src="/static/images/francisco.jpeg" class="img-circle" style="width: 140px; height: 140px;" alt="">
+					<h4 style="padding-top:20px">Francisco Silva</h4>
+					<p>Estudiante, 5to semestre PSM Maracay
+					<ul class="list-inline social-buttons">
+						<li><a href="#"><i class="fa fa-2x fa-github"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-linkedin"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-envelope"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-phone"></i></a></li>
+					</ul></p>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+					<img src="/static/images/luis.jpeg" class="img-circle" style="width: 140px; height: 140px;" alt="">
+					<h4 style="padding-top:20px">Luis Cruces</h4>
+					<p>Estudiante, 5to semestre PSM Maracay
+					<ul class="list-inline social-buttons">
+						<li><a href="#"><i class="fa fa-2x fa-github"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-linkedin"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-envelope"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-phone"></i></a></li>
+					</ul></p>
+                </div>
+			<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+					<img src="/static/images/octavio.jpeg" class="img-circle" style="width: 140px; height: 140px;" alt="">
+					<h4 style="padding-top:20px">Octavio Luque</h4>
+					<p>Estudiante, 5to semestre PSM Maracay
+					<ul class="list-inline social-buttons">
+						<li><a href="#"><i class="fa fa-2x fa-github"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-linkedin"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-envelope"></i></a></li>
+						<li><a href="#"><i class="fa fa-2x fa-phone"></i></a></li>
+					</ul></p>
+                </div>
+			</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+    <!-- Map Section -->
+    <div class="content-section text-center">
+		<iframe width="100%" height="350" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d583.6345495427707!2d-67.56622426406147!3d10.24467219729688!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e802353c7457651%3A0x1c8159965e374a9f!2sI.U.P.%20%22Santiago%20Mari%C3%B1o%22%20Ext.%20Maracay!5e0!3m2!1ses!2sve!4v1674617414406!5m2!1ses!2sve"></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+			<p><a href="#">Ass Face</a> &copy; </p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="/static/js/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/static/js/grayscale.js"></script>
+
+{% endblock %}

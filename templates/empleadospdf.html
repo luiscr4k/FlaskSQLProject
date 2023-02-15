@@ -1,0 +1,35 @@
+<h1 style="text-align: center;">CDDS C.A</h1>
+<h3 style="text-align: center;">J-1300739330</h3>
+<hr />
+<h2 class="sub-header">Reporte de empleados</h2>
+<hr />
+<div class="table-responsive">
+<table class="table table-striped">
+<thead>
+<tr>
+<th><h3>Cedula/RIF</h3></th>
+<th><h3>Nombre Completo</h3></th>
+<th><h3>Movil/Fijo</h3></th>
+<th><h3>Salario</h3></th>
+<th><h3>Departamento</h3></th>
+<th><h3>Num Hijos</h3></th>
+<th><h3>Fecha de Ingreso</h3></th>
+</tr>
+</thead>
+<tbody>
+{% for empleado in empleados %}
+<tr>
+<td>{{empleado.rif}}</td>
+<td>{{empleado.nombre_empleado}} {{empleado.apellidoP_empleado}} {{empleado.apellidoM_empleado}}</td>
+<td>{{empleado.tlf_movil_emp}}/{{empleado.tlf_fijo_emp}}</td>
+<td>{{empleado.salario}}</td>
+<td>{{empleado.codigo_dep_emp}} {{empleado.nombre_dep}}</td>
+<td>{{empleado.num_hijos}}</td>
+<td>{{empleado.fecha_ingreso_emp}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+    <hr />
+<p>Informe realizado por Elibeth Curalli, Luis Cruces, Francisco Silva y Octavio Luque para el Polit&eacute;cnico Santiago Mari&ntilde;o</p>
+</div>

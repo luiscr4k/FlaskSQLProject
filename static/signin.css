@@ -1,0 +1,37 @@
+.login{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.vh{
+  height: 100vh;
+  background-image: url(/static/img/background.jpeg);
+  background-position: center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-fluid{
+  margin: 0;
+  width: 100%;
+}
+.fw-bold{
+  font-weight: 700;
+}
+
+.form-control{
+  border-color: rgb(255, 204, 187);
+  border-radius: 10px;
+}
+
+.login-section, .login-section .container{
+  width: 70%;
+  text-align: left
+}
+
+.login-section h2{
+  text-align: center
+}

@@ -1,0 +1,60 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+CDDS - Inicia Sesion
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
+{% endblock %}
+
+{% block content %}
+<body>
+<section class="vh">
+  <div class="container-fluid">
+    <div class="row d-flex justify-content-center align-items-center h-100 login">
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" id="divinicio">
+        <form method="POST" action="/login">
+            {{ loginform.hidden_tag() }}
+          <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <br>
+            <br>
+            <p class="lead mb-0 me-3 text-center fw-bold">Inicia sesión</p>
+
+          <!-- Email input -->
+          <div class="form-outline mb-4 ">
+            {{wtf.form_field(loginform.usuario)}}
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            {{wtf.form_field(loginform.password)}}
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Checkbox -->
+            <div class="form-check mb-0">
+              <label class="form-check-label">
+                {{ wtf.form_field(loginform.recuerda)}}
+              </label>
+            </div>
+            <a href="#!" class="text-body">Olvidaste la contraseña?</a>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="button submit" class="btn btn-warning btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem; margin: 1rem 0;">Iniciar sesión</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">No tienes una cuenta? <a href="../registro"
+                class="link-danger">Registrate</a></p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+
+{% endblock %}
